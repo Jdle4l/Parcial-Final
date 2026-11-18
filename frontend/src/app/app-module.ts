@@ -9,9 +9,12 @@ import { Login } from './login/login';
 import { Registro } from './registro/registro';
 import { Inicio } from './inicio/inicio';
 import { authInterceptor } from './interceptors/auth-interceptor';
+import { Headercomponent } from './components/headercomponent/headercomponent';
+import { Logincomponent } from './components/logincomponent/logincomponent';
+import { Registrocomponent } from './components/registrocomponent/registrocomponent';
 
 @NgModule({
-  declarations: [App, Login, Registro, Inicio],
+  declarations: [App, Login, Registro, Inicio, Headercomponent, Logincomponent, Registrocomponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
     provideBrowserGlobalErrorListeners(),
