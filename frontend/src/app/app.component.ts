@@ -5,9 +5,9 @@ import { AuthService } from './services/auth.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-root',
   standalone: false,
-  styleUrl: './app.css',
-  templateUrl: './app.html',
+  styleUrl: './app.component.css',
+  templateUrl: './app.component.html',
 })
-export class App {
+export class AppComponent {
   authService = inject(AuthService);
 }

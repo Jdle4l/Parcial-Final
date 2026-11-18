@@ -1,0 +1,177 @@
+===============================================================================
+            TIENDA DE BARRIO - PARCIAL FINAL DESARROLLO DE SISTEMAS 3
+                        Instrucciones de uso del aplicativo
+===============================================================================
+
+INTEGRANTES
+-----------
+- Integrante 1
+- Integrante 2
+- Integrante 3
+- Integrante 4
+- Integrante 5
+
+
+1. REQUISITOS
+-------------
+- Java 21
+- Node.js 20 o superior (incluye npm)
+- MySQL 8 o superior en ejecucion
+- Navegador web actualizado
+
+No es necesario instalar Maven: el backend incluye el wrapper (mvnw).
+
+
+2. CONFIGURACION DEL BACKEND
+----------------------------
+Archivo: backend/src/main/resources/application.properties
+
+Si el archivo no existe, copiar "application-example.properties" en la misma
+carpeta y renombrarlo a "application.properties".
+
+Propiedades a revisar:
+
+  spring.datasource.url       Direccion de la base de datos. Por defecto:
+                              jdbc:mysql://localhost:3306/parcialfinal
+                              La base "parcialfinal" se crea automaticamente.
+  spring.datasource.username  Usuario de MySQL (por defecto: root)
+  spring.datasource.password  Contraseña de MySQL
+  jwt.secret                  Clave para firmar los tokens JWT. Debe tener
+                              minimo 32 caracteres.
+
+Para generar una clave JWT nueva desde PowerShell:
+
+  $b = New-Object byte[] 24; [System.Security.Cryptography.RNGCryptoServiceProvider]::new().GetBytes($b); [Convert]::ToBase64String($b)
+
+Las tablas (useraccount, lacteo y carne) se crean solas al iniciar el backend.
+
+
+3. EJECUCION
+------------
+Primero se inicia el backend y despues el frontend.
+
+  a) Backend (desde la carpeta "backend"):
+
+       Windows:      mvnw.cmd spring-boot:run
+       Git Bash:     ./mvnw spring-boot:run
+
+     Queda disponible en:  http://localhost:8080
+     Documentacion Swagger: http://localhost:8080/swagger-ui/index.html
+
+  b) Frontend (desde la carpeta "frontend"):
+
+       npm install        (solo la primera vez)
+       npm start
+
+     Abrir en el navegador: http://localhost:4200
+
+
+4. USUARIOS
+-----------
+Al iniciar el backend se crean automaticamente dos cuentas:
+
+  Rol              Usuario       Contraseña
+  ---------------  ------------  ------------
+  Vendedor (ADMIN) admin         1234567890
+  Cliente (USER)   normaluser    1234567890
+
+Los clientes nuevos pueden crear su cuenta desde la opcion "Regístrese" de la
+pantalla de inicio de sesion. Toda cuenta registrada queda con rol de cliente.
+
+
+5. INICIO DE SESION
+-------------------
+1. Ingresar a http://localhost:4200
+2. Escribir usuario y contraseña y presionar "Ingresar".
+3. Segun el rol, la aplicacion redirige automaticamente:
+     - Vendedor -> Panel del vendedor (Administrar productos)
+     - Cliente  -> Productos de la tienda (Comprar)
+4. Para cerrar sesion, presionar "Salir" en la barra superior.
+
+La sesion dura 24 horas. Al vencer, la aplicacion regresa al inicio de sesion.
+Cada rol solo puede entrar a sus propias pantallas.
+
+
+6. MODO VENDEDOR (ADMIN)
+------------------------
+Pantalla "Administrar productos". Las pestañas "Lácteos" y "Carnes" permiten
+cambiar el tipo de producto que se gestiona.
+
+  Crear producto
+    1. Diligenciar Nombre, Cantidad, Precio y URL imagen.
+    2. Presionar "Guardar". El producto aparece en la tabla.
+
+  Editar producto
+    1. Presionar "Editar" en la fila del producto.
+    2. Modificar los datos en el formulario y presionar "Guardar".
+    3. "Cancelar" descarta la edicion.
+
+  Eliminar producto
+    1. Presionar "Eliminar" en la fila del producto.
+    2. Confirmar en el mensaje del navegador.
+
+  La tabla muestra: ID, foto, nombre, cantidad, precio y URL de la imagen.
+
+  Reglas de los datos:
+    - El nombre es obligatorio y no se puede repetir dentro del mismo tipo.
+    - La cantidad debe ser 0 o mayor.
+    - El precio debe ser mayor a 0.
+    - La URL de la imagen debe iniciar con http:// o https:// y apuntar
+      directamente a una imagen (por ejemplo terminada en .jpg o .png).
+
+
+7. MODO CLIENTE (USER)
+----------------------
+Pantalla "Productos de la tienda". Muestra dos tablas, Lácteos y Carnes, con
+ID, foto, nombre, unidades disponibles y precio.
+
+  Comprar
+    1. Escribir la cantidad deseada en la fila del producto.
+    2. Presionar "Comprar".
+    3. Se muestra el mensaje de compra con el total a pagar
+       (precio x cantidad) y las unidades disponibles se descuentan del
+       inventario general.
+
+  - Si la cantidad supera las unidades disponibles, la compra se rechaza.
+  - Los productos sin unidades aparecen como "Agotado" y no se pueden comprar.
+  - "Refrescar" actualiza las tablas con el inventario actual.
+
+
+8. SERVICIOS DEL BACKEND
+------------------------
+Todas las rutas, excepto /auth, requieren el encabezado:
+  Authorization: Bearer <token>
+
+  Autenticacion
+    POST   /auth/login                       Publico
+    POST   /auth/register                    Publico
+
+  Productos ({tipo} = lacteo o carne)
+    GET    /{tipo}/getall                    Vendedor y cliente
+    GET    /{tipo}/getbyid/{id}              Vendedor y cliente
+    POST   /{tipo}/createjson                Vendedor
+    PUT    /{tipo}/updatejson?id=            Vendedor
+    DELETE /{tipo}/deletebyid/{id}           Vendedor
+    PUT    /{tipo}/comprar?id=&cantidad=     Cliente
+
+  Ejemplo de producto (JSON):
+    {
+      "nombre": "Leche entera 1L",
+      "cantidad": 24,
+      "precio": 4500,
+      "urlImagen": "https://picsum.photos/id/292/200"
+    }
+
+
+9. SOLUCION DE PROBLEMAS
+------------------------
+- "No fue posible iniciar sesión" o la pagina no carga datos:
+    verificar que el backend este en ejecucion en el puerto 8080.
+- El backend no inicia por error de conexion a la base de datos:
+    revisar que MySQL este encendido y que usuario y contraseña en
+    application.properties sean correctos.
+- La foto aparece rota en la tabla:
+    la URL no apunta directamente a una imagen o la imagen ya no existe.
+    Editar el producto y cambiar la URL.
+- El puerto 4200 u 8080 ya esta en uso:
+    cerrar la otra aplicacion que lo usa o reiniciar el equipo.

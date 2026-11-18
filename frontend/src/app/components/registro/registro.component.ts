@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
-import { UserModel } from '../models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-registro',
   standalone: false,
-  styleUrl: './registro.css',
-  templateUrl: './registro.html',
+  styleUrl: './registro.component.css',
+  templateUrl: './registro.component.html',
 })
-export class Registro {
+export class RegistroComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 

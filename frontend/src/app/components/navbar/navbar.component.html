@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/inicio">Parcial Final</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#menu"
+      aria-controls="menu"
+      aria-expanded="false"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inicio" routerLinkActive="active">Inicio</a>
+        </li>
+        @if (authService.hasRole('ADMIN')) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active"
+              >Administrar productos</a
+            >
+          </li>
+        }
+        @if (authService.hasRole('USER')) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/cliente" routerLinkActive="active">Comprar</a>
+          </li>
+        }
+      </ul>
+      <span class="navbar-text me-3">
+        {{ authService.getUsername() }}
+        <span class="badge bg-secondary">{{ authService.getRole() }}</span>
+      </span>
+      <button class="btn btn-outline-light btn-sm" (click)="authService.logout()">Salir</button>
+    </div>
+  </div>
+</nav>

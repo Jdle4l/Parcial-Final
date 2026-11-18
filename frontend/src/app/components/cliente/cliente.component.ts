@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LacteoService } from '../services/lacteo.service';
-import { CarneService } from '../services/carne.service';
-import { ProductoModel } from '../models/producto.model';
+import { LacteoService } from '../../services/lacteo.service';
+import { CarneService } from '../../services/carne.service';
+import { ProductoModel } from '../../models/producto.model';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-cliente',
   standalone: false,
-  styleUrl: './cliente.css',
-  templateUrl: './cliente.html',
+  styleUrl: './cliente.component.css',
+  templateUrl: './cliente.component.html',
 })
-export class Cliente implements OnInit {
+export class ClienteComponent implements OnInit {
   private lacteoService = inject(LacteoService);
   private carneService = inject(CarneService);
 

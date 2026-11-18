@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
-  selector: 'app-inicio',
+  selector: 'app-navbar',
   standalone: false,
-  styleUrl: './inicio.css',
-  templateUrl: './inicio.html',
+  styleUrl: './navbar.component.css',
+  templateUrl: './navbar.component.html',
 })
-export class Inicio {
+export class NavbarComponent {
   authService = inject(AuthService);
 }

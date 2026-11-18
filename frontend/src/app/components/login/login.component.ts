@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-login',
   standalone: false,
-  styleUrl: './login.css',
-  templateUrl: './login.html',
+  styleUrl: './login.component.css',
+  templateUrl: './login.component.html',
 })
-export class Login {
+export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 

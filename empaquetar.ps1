@@ -25,6 +25,7 @@ foreach ($carpeta in @('backend', 'frontend')) {
     }
 }
 Copy-Item (Join-Path $raiz 'README.md') $temporal
+Copy-Item (Join-Path $raiz 'INSTRUCCIONES.txt') $temporal
 
 if (Test-Path $destino) { Remove-Item $destino -Force }
 Add-Type -AssemblyName System.IO.Compression.FileSystem
