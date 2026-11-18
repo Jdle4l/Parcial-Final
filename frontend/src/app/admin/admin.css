@@ -1,0 +1,17 @@
+.foto {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}
+
+.preview {
+  max-height: 140px;
+  object-fit: cover;
+}
+
+.url {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

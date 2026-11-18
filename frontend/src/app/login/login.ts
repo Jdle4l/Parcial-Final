@@ -21,7 +21,7 @@ export class Login {
   login(): void {
     this.error = '';
     this.authService.login(this.username, this.password).subscribe({
-      next: () => this.router.navigate(['/inicio']),
+      next: (response) => this.router.navigate([response.role === 'ADMIN' ? '/admin' : '/cliente']),
       error: (err: HttpErrorResponse) => {
         this.error = typeof err.error === 'string' ? err.error : 'No fue posible iniciar sesión';
       },

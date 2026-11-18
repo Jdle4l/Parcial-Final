@@ -1,8 +1,13 @@
 <div class="card shadow-sm">
   <div class="card-body">
     <h3 class="card-title">Bienvenido, {{ authService.getUsername() }}</h3>
-    <p class="card-text mb-0">
+    <p class="card-text">
       Rol: <span class="badge bg-primary">{{ authService.getRole() }}</span>
     </p>
+    @if (authService.hasRole('ADMIN')) {
+      <a routerLink="/admin" class="btn btn-primary">Administrar productos</a>
+    } @else {
+      <a routerLink="/cliente" class="btn btn-success">Ir a comprar</a>
+    }
   </div>
 </div>

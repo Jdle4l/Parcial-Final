@@ -49,6 +49,11 @@ public class SecurityConfig {
 								"/user/me")
 						.hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/user/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.GET, "/lacteo/getall", "/lacteo/getbyid/**", "/carne/getall",
+								"/carne/getbyid/**")
+						.hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/lacteo/comprar", "/carne/comprar").hasRole("USER")
+						.requestMatchers("/lacteo/**", "/carne/**").hasRole("ADMIN")
 						.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

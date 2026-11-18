@@ -44,6 +44,17 @@
 | DELETE | `/user/deletebyid/{id}`    | ADMIN        |
 | DELETE | `/user/deletebyname?name=` | ADMIN        |
 
+Productos (`{tipo}` = `lacteo` o `carne`):
+
+| Método | Ruta                                  | Acceso      |
+| ------ | ------------------------------------- | ----------- |
+| GET    | `/{tipo}/getall`                      | USER, ADMIN |
+| GET    | `/{tipo}/getbyid/{id}`                | USER, ADMIN |
+| POST   | `/{tipo}/createjson`                  | ADMIN       |
+| PUT    | `/{tipo}/updatejson?id=`              | ADMIN       |
+| DELETE | `/{tipo}/deletebyid/{id}`             | ADMIN       |
+| PUT    | `/{tipo}/comprar?id=&cantidad=`       | USER        |
+
 Las peticiones protegidas requieren el encabezado `Authorization: Bearer <token>`.
 
 ## Frontend (`/frontend`)

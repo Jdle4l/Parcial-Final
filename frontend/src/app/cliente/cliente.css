@@ -1,0 +1,9 @@
+.foto {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}
+
+.col-compra {
+  width: 200px;
+}
