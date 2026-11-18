@@ -1,0 +1,8 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title">Bienvenido, {{ authService.getUsername() }}</h3>
+    <p class="card-text mb-0">
+      Rol: <span class="badge bg-primary">{{ authService.getRole() }}</span>
+    </p>
+  </div>
+</div>
